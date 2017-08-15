@@ -1,0 +1,13 @@
+global MAXFIT;
+global covar;
+global alpha;
+global chisq;
+global alambda;
+global pmfit;
+global pochisq;
+global paramtry;
+global beta;
+global dparam;
+global pfnvals_len;
+global pdy_dparam_pure;
+global pdy_dparam_conv;

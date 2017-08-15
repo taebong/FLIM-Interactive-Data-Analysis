@@ -1,0 +1,56 @@
+function [A_mle,mu_mle,sig_mle,rho_mle,dA,dmu,dsig,drho] = GaussianMixture2DMLE(image,A_init,mu_init,sig_init,rho_init)
+
+sizeimg = size(image);
+A = A_init;
+mu = mu_init;
+sig = sig_init;
+rho = rho_init;
+Ngauss = length(A_init);
+
+maxiter = 10000;
+iter = 1;
+%standard deviation of normal proposal distribution
+Asig0 = sqrt(A_init);
+musig0 = 0.5;
+sigsig0 = 0.5;
+rhosig0 = 0.1;
+
+
+while iter<maxiter
+    prob = GaussianMixtureModel2D(A,mu,sig,rho,sizeimg);
+    
+    %assume Poisson photon generation, calculate likelihood
+    probpix = prob.^image.*exp(-prob)./factorial(image);
+    log_lik = sum(log(probpix(:)));
+    
+    %proposal state
+    A_new = A+Asig0.*randn([Ngauss,1]);
+    mu_new = mu+musig0*randn([Ngauss,2]);
+    
+    sig_new = zeros(Ngauss,2);
+    rho_new = zeros(Ngauss,1); 
+    for i = 1:Ngauss
+        sig_new(i,1) = sampleTruncNorm(sig(i,1),sigsig0,[0,Inf],1);
+        sig_new(i,2) = sampleTruncNorm(sig(i,2),sigsig0,[0,Inf],1);
+        rho_new(i) = sampleTruncNorm(rho(i),rhosig0,[0,1],1);
+    end
+    
+    %likelihood of proposed state
+    prob_new = GaussianMixtureModel2D(A_new,mu_new,sig_new,rho_new,sizeimg);
+    probpix_new = prob_new.^image.*exp(-prob_new)./factorial(image);
+    log_lik_new = sum(log(probpix_new(:)));
+    
+    %probability ratio between the proposed state and the previous state
+    a1 = exp(log_lik_new-log_lik);
+    
+    iter = iter+1;
+end
+
+
+function ratio = calcJumpingProbRatio(sig,rho,sigp,rhop,Asig0,musig0,sigsig0,rhosig0)
+%jumping ratio is basically the ratio of the normalization constants of
+%truncated normal dists. 
+
+normconst_A = 1-normcdf(
+
+end

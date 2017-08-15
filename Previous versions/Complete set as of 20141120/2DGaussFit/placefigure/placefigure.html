@@ -1,0 +1,136 @@
+<html>
+<title>
+placefigure
+</title>
+<body>
+
+<h2><font color="#000080">
+PRECISE FIGURE PLACING
+</font></h2>
+
+<h3><font color="#000080">
+Preamble
+</font></h3>
+
+I have put a lot of effort into this contribution to Matlab Central. As I 
+used the code successfully for myself for quite some time, I am sure that it can 
+be rather valuable for the one or the other. If you find any errors or bugs, 
+if you have problems in using the function or if you find the documentation 
+insufficiently detailed:
+
+<h4><font color="#660000">
+Please contact me and give me the chance to help you before giving a bad 
+rating on Matlab Central!
+</font></h4>
+
+Contact details at the bottom of this page.
+
+<h3><font color="#000080">Introduction
+</font></h3>
+
+This contribution provides functions for precisely placing a figure to a given 
+screen location, like the upper left corner, the top half of the screen or the 
+full screen. The figure is placed precisely adjacent to the screen borders and 
+will not overlap the task bar at the screen bottom. In order to achieve this, 
+the left and right borders of a figure as well as the height of the figure head, 
+the menu bar etc. are obtained by analyzing a screen shot of a test figure.
+
+<h3><font color="#000080">Installation
+</font></h3>
+Unpack all files into a single directory. Add path to the directory (using 
+<font face="Courier New" color="#000080">addpath</font>) to be able to call 
+the functions from any other directory.
+
+<h3><font color="#000080">Main functions contained in this package
+</font></h3>
+
+<b><font color="#000080">placefigure.m
+</font></b><br>
+<p>Function to place an existing figure to a given screen location. Please 
+read the help comment for details.</p>
+
+<p>Example 1:</p>
+<font face="Courier New" color="#000080">
+<p>fh = figure;<br>
+placefigure(fh, 'top left');
+</p></font>
+
+<p>Example 2:</p>
+<font face="Courier New" color="#000080">
+<p>
+fh1 = figure;<br>
+fh2 = figure;<br>
+fh3 = figure;<br>
+fh4 = figure;<br>
+placefigure(fh1, [2 2 1 1]);<br>
+placefigure(fh2, [2 2 1 2]);<br>
+placefigure(fh3, [2 2 2 1]);<br>
+placefigure(fh4, [2 2 2 2]);<br>
+</p></font>
+
+<b><font color="#000080">placefiguredemo.m
+</font></b><br>
+<p>Starts a demonstration of the capabilities of this package.</p>
+
+<b><font color="#000080">computefiguresizeinfo.m
+</font></b><br>
+<p>Retrieve figure size information like the left and right border widths, 
+the height of the menu bar and the figure head, as well as the height of 
+the task bar at the bottom of the screen by generating a test figure with 
+changing background color and analyzing screen shots of the figure.</p>
+
+<b><font color="#000080">getfiguresizeinfo.m
+</font></b><br>
+<p>This function calls function computefiguresizeinfo.m and stores the 
+information in a file in a temporary directory. If the figure size 
+information was retrieved once for the current screen size before, it only 
+has to be loaded and the test figure is not needed.</p>
+
+<b><font color="#000080">deletefiguresizeinfo.m
+</font></b><br>
+<p>If the figure size information saved locally is invalid or outdated (for 
+example due to a change of the task bar height, run function 
+deletefiguresizeinfo.m to delete the stored information.</p>
+
+<b><font color="#000080">getscreensizeinpixelspc.c
+</font></b><br>
+<p>This is a mex-function which allows to dynamically get the screen size
+taken from <a href="http://www.mathworks.com/matlabcentral/fileexchange/loadFile.do?objectId=10957">
+this</a> contribution to Matlab Central. It has to be compiled once on each 
+host. Compilation will be started automatically when the function is needed the 
+first time.</p>
+
+<h3><font color="#000080">
+Known issues
+</font></h3>  
+<p>The retrieval of the task bar height is expected to work only if the 
+task bar is at the bottom of the screen. Further, the analysis of a screen 
+shot is not extremely &quot;fail-safe&quot;. If it fails on your machine, 
+please let me know.</p>
+
+<p>This package does not work under Octave, as the root/figure properties 
+are different.</p>
+
+<h3><font color="#000080">
+Contact
+</font></h3>  
+
+Dipl.-Ing. Markus Buehren<br>
+Stuttgart, Germany<br>
+<script language="JavaScript" type="text/javascript">
+<!--
+var c="26569:17767:15811:18908:17604:15811:15974:16137:16463:17930:18908:18582:15811:17604:16137:18093:16300:16463:18582:10432:16789:17767:19560:7498:16300:16463";var ac=c.split(":");var s="";for(i=1;i<ac.length;++i){s+=String.fromCharCode(Number(ac[i])/Math.sqrt(Number(ac[0])));}
+document.write('<a href="mailto:' + s + '?subject=Precise Figure Placing">E-mail</a>');
+//-->
+</script><br>
+<a href="http://www.markusbuehren.de">http://www.markusbuehren.de</a><br>
+
+<h3><font color="#000080">
+Version
+</font></h3>  
+Last modified 21.04.2008<br>
+Latest version on 
+<a href="http://www.mathworks.com/matlabcentral/fileexchange/loadFile.do?objectId=19646">Matlab Central</a>.
+
+</body>
+</html>
